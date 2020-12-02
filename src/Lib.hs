@@ -10,14 +10,15 @@ someFunc = putStrLn "someFunc"
 day1 = do
   content <- readFile "input/d1"
   let xs' = words content
-      xs = map read xs' :: [Integer]
+      xs = map read xs'
   print $ d1p1 xs
   print $ d1p2 xs
 
 d1p1 xs = case [ x * y | x <- xs, y <- xs, x + y == 2020 ] of (x:_) -> x; _ -> 0
 
 d1p2 xs = case [ x * y * z | x <- xs, y <- xs, z <- xs, x + y + z == 2020 ]
-          of (x:_) -> x; _ -> 0
+          of x:_ -> x
+             _ -> 0
 
 day2 = do
   content <- readFile "input/d2"
