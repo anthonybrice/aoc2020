@@ -21,7 +21,6 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
-- text >= 1.2.4.0
 - utility-ht >= 0.0.15
 - split >= 0.2.3.4
 
