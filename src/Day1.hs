@@ -1,6 +1,4 @@
-module Day1
-  ( day1
-  ) where
+module Day1 ( day1 ) where
 
 import Data.List (tails)
 
