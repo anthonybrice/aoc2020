@@ -17,5 +17,4 @@ d1p1 xs =
 d1p2 xs =
   case [ x * y * z
        | x:ys <- tails xs, y:zs <- tails ys, z <- zs, x + y + z == 2020 ]
-  of x:_ -> x
-     _ -> 0
+  of x:_ -> x; _ -> 0

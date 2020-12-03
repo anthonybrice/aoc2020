@@ -40,6 +40,8 @@ packages:
 #   commit: e7b331f14bcffb8367cd58fbfc8b40ec7642100a
 #
 # extra-deps: []
+extra-deps:
+- json-0.10@sha256:b56b1f5f1e17d11e6bcf754ea7f0243a87e224a17608dcd20f331a1909be2e25,3188
 
 # Override default flag values for local packages and extra-deps
 # flags: {}
@@ -64,3 +66,5 @@ packages:
 #
 # Allow a newer minor version of GHC than the snapshot specifies
 # compiler-check: newer-minor
+ghc-options:
+  "$everything": -haddock

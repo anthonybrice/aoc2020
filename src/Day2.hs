@@ -21,9 +21,7 @@ day2 = do
           in ((p,q), T.index y2 0, y3)
 
     valid ((p,q), c, pw) =
-      let n = T.length $ T.filter (== c) pw
-      in p <= n && n <= q
+      let n = T.length $ T.filter (== c) pw in p <= n && n <= q
 
-    valid' ((p,q), c, pw) =
-      (g p' == c || g q' == c) && (g p' /= c || g q' /= c)
+    valid' ((p,q), c, pw) = (g p' == c || g q' == c) && (g p' /= c || g q' /= c)
       where p' = p-1; q' = q-1; g = T.index pw
