@@ -1,6 +1,9 @@
 {-# OPTIONS_GHC -fno-warn-missing-fields #-}
 
-module Day4 ( day4 ) where
+module Day4
+  ( day4
+  , parseMaybe
+  ) where
 
 import Data.List (groupBy)
 import Data.Char (isDigit, isSpace, isAlpha)
@@ -18,7 +21,7 @@ parseMaybe :: ReadP a -> String -> Maybe a
 parseMaybe parser input =
   case readP_to_S parser input of
     [] ->  Nothing
-    ((result, _):_) -> Just result
+    (result, _):_ -> Just result
 
 data Passport = Passport
   { _byr :: Int
@@ -131,10 +134,10 @@ skipNonspaces = do
         skip _ = do return ()
 
 parseAny :: ReadP PassportPart
-parseAny = byr <++ iyr <++ eyr <++ hgt <++ hcl <++ ecl <++ pid <++ cid
+parseAny = parseNoCid <++ cid
 
 parseNoCid :: ReadP PassportPart
-parseNoCid = byr <++ iyr <++ eyr <++ hgt <++ hcl <++ ecl <++ pid
+parseNoCid =  byr <++ iyr <++ eyr <++ hgt <++ hcl <++ ecl <++ pid
 
 passportYearParser :: (Int -> Bool) -> ReadP Int
 passportYearParser cond = do
