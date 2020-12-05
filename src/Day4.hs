@@ -2,7 +2,7 @@
 
 module Day4 ( day4 ) where
 
-import Data.List (groupBy, delete)
+import Data.List (groupBy)
 import Data.Char (isDigit, isSpace, isAlpha)
 import Data.Maybe (mapMaybe)
 import Text.ParserCombinators.ReadP
@@ -10,7 +10,7 @@ import Text.ParserCombinators.ReadP
 day4 = do
   content <- readFile "input/d4"
   let raw = lines content
-      xs = map (unwords . delete "") $ groupBy (\_ y -> y /= "") raw
+      xs = map unwords $ groupBy (\_ y -> y /= "") raw
 
   print $ length $ mapMaybe passport xs
 
