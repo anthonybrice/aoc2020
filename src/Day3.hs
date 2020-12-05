@@ -1,7 +1,6 @@
 module Day3 ( day3 ) where
 
-import Data.List (tails, mapAccumR)
-import Data.List.HT (sieve)
+import Data.List (mapAccumR)
 
 day3 = do
   content <- readFile "input/d3"
@@ -13,9 +12,12 @@ day3 = do
 p1 = toboggan 3 1
 
 toboggan r d xs = length $ filter (== '#') ys where
-   ys' = tail $ sieve d xs
-   (_, ys) = mapAccumR f (r * length ys') ys'
-   f r' e = (r'-r, e!!r')
+  _:ys' = sieve d xs
+  (_, ys) = mapAccumR f (r * length ys') ys'
+  f r' e = (r'-r, e!!r')
+
+sieve n (x:xs) = x : sieve' xs
+  where sieve' xs = case drop (n-1) xs of y:ys -> y : sieve' ys; [] -> []
 
 p2 xs = product $
   map (\(r,d) -> toboggan r d xs) [(1,1), (3,1), (5,1), (7,1), (1,2)]

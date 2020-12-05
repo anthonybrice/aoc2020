@@ -28,6 +28,7 @@ library
       Day1
       Day2
       Day3
+      Day4
       Lib
   other-modules:
       Paths_aoc2020
@@ -35,8 +36,7 @@ library
       src
   build-depends:
       base >=4.7 && <5
-    , split >=0.2.3.4
-    , utility-ht >=0.0.15
+    , containers
   default-language: Haskell2010
 
 executable aoc2020-exe
@@ -45,12 +45,11 @@ executable aoc2020-exe
       Paths_aoc2020
   hs-source-dirs:
       app
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -fwarn-unused-imports
   build-depends:
       aoc2020
     , base >=4.7 && <5
-    , split >=0.2.3.4
-    , utility-ht >=0.0.15
+    , containers
   default-language: Haskell2010
 
 test-suite aoc2020-test
@@ -64,6 +63,5 @@ test-suite aoc2020-test
   build-depends:
       aoc2020
     , base >=4.7 && <5
-    , split >=0.2.3.4
-    , utility-ht >=0.0.15
+    , containers
   default-language: Haskell2010
