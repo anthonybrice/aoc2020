@@ -13,13 +13,10 @@ day7 = do
       zs = map (flip bagTree ys . (\(BagRule b _) -> b)) ys
 
   print $ length $ filter canContainShinyGoldBag zs
+  print $ countBags $ head $ filter (\(BagTree b _) -> b == shinyGoldBag) zs
 
-data Bag = Bag BagDesc BagColor
+newtype Bag = Bag String
   deriving (Show, Eq)
-
-type BagDesc = String
-
-type BagColor = String
 
 data BagRule = BagRule Bag [BagContains]
   deriving (Show)
@@ -38,18 +35,12 @@ bagRuleParser = do
 
 bagParser :: ReadP Bag
 bagParser = do
-  d <- bagDescParser
+  d <- word
   space
-  c <- bagColorParser
+  c <- word
   string " bag"
   optional $ char 's'
-  return $ Bag d c
-
-bagDescParser :: ReadP BagDesc
-bagDescParser = word
-
-bagColorParser :: ReadP BagColor
-bagColorParser = word
+  return $ Bag $ d ++ " " ++ c
 
 bagContainsParser :: ReadP [BagContains]
 bagContainsParser = f +++ g where
@@ -84,4 +75,9 @@ canContainShinyGoldBag (BagTree _ bcs) = any f bcs where
   f (BagContainsTree _ bt@(BagTree b _)) =
     b == shinyGoldBag || canContainShinyGoldBag bt
 
-shinyGoldBag = Bag "shiny" "gold"
+countBags :: BagTree -> Integer
+countBags x = countBags' x - 1 where
+  countBags' (BagTree _ bs) =
+    1 + sum (map (\(BagContainsTree i b') -> i * countBags' b') bs)
+
+shinyGoldBag = Bag "shiny gold"
