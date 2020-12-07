@@ -2,9 +2,9 @@ module Day5
   ( day5
   ) where
 
-import Data.Maybe (mapMaybe, fromJust)
-import Data.List (sort, find)
-import Text.ParserCombinators.ReadP
+import Data.List (find, sort)
+import Data.Maybe (fromJust, mapMaybe)
+import Text.ParserCombinators.ReadP (ReadP, count, satisfy)
 
 import Day4 (parseMaybe)
 
@@ -45,7 +45,7 @@ column = bsp (0,7) . map (== 'L')
 bsp :: (Int,Int) -> [Bool] -> Int
 bsp (l,h) (True:x:xs) = bsp (l, mid l h) (x:xs)
 bsp (l,h) (False:x:xs) = bsp (mid l h + 1, h) (x:xs)
-bsp (l,h) [True] = l
-bsp (l,h) [False] = h
+bsp (l, _) [True] = l
+bsp (_, h) [False] = h
 
 mid l h = (l + h) `quot` 2
