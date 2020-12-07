@@ -13,7 +13,7 @@ day7 = do
       zs = map (flip bagTree ys . (\(BagRule b _) -> b)) ys
 
   print $ length $ filter canContainShinyGoldBag zs
-  print $ countBags $ head $ filter (\(BagTree b _) -> b == shinyGoldBag) zs
+  print $ countBags $ head $ filter (\(Tree b _) -> b == shinyGoldBag) zs
 
 newtype Bag = Bag String
   deriving (Show, Eq)
@@ -58,26 +58,26 @@ bagContainsParser = f +++ g where
     optional $ string ", "
     return $ BagContains n b
 
-data BagTree = BagTree Bag [BagContainsTree]
-  deriving (Show)
+data Tree a b = Tree a [b]
+
+type BagTree = Tree Bag BagContainsTree
 
 data BagContainsTree = BagContainsTree Integer BagTree
-  deriving (Show)
 
 bagTree :: Bag -> [BagRule] -> BagTree
 bagTree b rs =
   let (BagRule _ bcs):_ = filter (\(BagRule b' _) -> b == b') rs
       bts = map (\(BagContains i b') -> BagContainsTree i $ bagTree b' rs) bcs
-  in BagTree b bts
+  in Tree b bts
 
 canContainShinyGoldBag :: BagTree -> Bool
-canContainShinyGoldBag (BagTree _ bcs) = any f bcs where
-  f (BagContainsTree _ bt@(BagTree b _)) =
+canContainShinyGoldBag (Tree _ bcs) = any f bcs where
+  f (BagContainsTree _ bt@(Tree b _)) =
     b == shinyGoldBag || canContainShinyGoldBag bt
 
 countBags :: BagTree -> Integer
 countBags x = countBags' x - 1 where
-  countBags' (BagTree _ bs) =
+  countBags' (Tree _ bs) =
     1 + sum (map (\(BagContainsTree i b') -> i * countBags' b') bs)
 
 shinyGoldBag = Bag "shiny gold"
