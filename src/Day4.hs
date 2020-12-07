@@ -2,13 +2,21 @@
 
 module Day4
   ( day4
-  , parseMaybe
   ) where
 
 import Data.List (groupBy)
-import Data.Char (isDigit, isSpace, isAlpha)
 import Data.Maybe (mapMaybe)
 import Text.ParserCombinators.ReadP
+    ( ReadP,
+      (<++),
+      choice,
+      count,
+      many1,
+      optional,
+      pfail,
+      satisfy,
+      string )
+import Parse ( letter, digit, space, parseMaybe, skipNonspaces )
 
 day4 = do
   content <- readFile "input/d4"
@@ -16,12 +24,6 @@ day4 = do
       xs = map unwords $ groupBy (\_ y -> y /= "") raw
 
   print $ length $ mapMaybe passport xs
-
-parseMaybe :: ReadP a -> String -> Maybe a
-parseMaybe parser input =
-  case readP_to_S parser input of
-    (result, []):_ -> Just result
-    _ -> Nothing
 
 data Passport = Passport
   { _byr :: Int
@@ -61,16 +63,6 @@ passportParser = do
       f (Pid v) p' = p' {_pid = v}
       f (Cid v) p' = p' {_cid = v}
   return p
-
-letter :: ReadP Char
-letter = satisfy isAlpha
-
-digit :: ReadP Char
-digit = satisfy isDigit
-
-space :: ReadP Char
-space = satisfy (== ' ')
-
 byr :: ReadP PassportPart
 byr = do
   string "byr:"
@@ -117,13 +109,6 @@ cid = do
   string "cid:"
   skipNonspaces
   return $ Cid Nothing
-
-skipNonspaces :: ReadP ()
-skipNonspaces = do
-  s <- look
-  skip s
-  where skip (c:s) | (not . isSpace) c = do _ <- get; skip s
-        skip _ = do return ()
 
 parseAny :: ReadP PassportPart
 parseAny = do

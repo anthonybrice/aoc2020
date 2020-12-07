@@ -5,8 +5,7 @@ module Day5
 import Data.List (find, sort)
 import Data.Maybe (fromJust, mapMaybe)
 import Text.ParserCombinators.ReadP (ReadP, count, satisfy)
-
-import Day4 (parseMaybe)
+import Parse (parseMaybe)
 
 day5 = do
   content <- readFile "input/d5"

@@ -16,4 +16,4 @@ collate :: Eq a => [[a]] -> [a]
 collate = nub . concat
 
 collate' :: Eq a => [[a]] -> [a]
-collate' xss = collate $ map (\xs -> [ x | x <- xs, all (x `elem`) xss ]) xss
+collate' xss = collate $ map (\xs -> [x | x <- xs, all (x `elem`) xss]) xss

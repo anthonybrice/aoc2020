@@ -31,7 +31,9 @@ library
       Day4
       Day5
       Day6
+      Day7
       Lib
+      Parse
   other-modules:
       Paths_aoc2020
   hs-source-dirs:
