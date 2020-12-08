@@ -7,12 +7,12 @@ module Parse
   , word
   , integer
   , signedInteger
-  , (!^)) where
+  , (!^)
+  ) where
 
 import Data.Char (isSpace, isAlpha, isDigit)
-import Text.ParserCombinators.ReadP (munch1, (+++), char, get, look, ReadP, readP_to_S, satisfy, many1)
+import Text.ParserCombinators.ReadP (munch1, (+++), char, get, look, ReadP, readP_to_S, satisfy)
 import Data.List (genericIndex)
-
 
 letter :: ReadP Char
 letter = satisfy isAlpha
