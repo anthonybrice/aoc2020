@@ -63,6 +63,7 @@ passportParser = do
       f (Pid v) p' = p' {_pid = v}
       f (Cid v) p' = p' {_cid = v}
   return p
+
 byr :: ReadP PassportPart
 byr = do
   string "byr:"
